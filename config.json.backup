@@ -1,0 +1,31 @@
+{
+  "model_path": "models/vosk-model-small-ru-0.22",
+  "wake_phrases": [
+    "джарвис",
+    "дима",
+    "димон",
+    "дмитрий",
+    "слушай помощник"
+  ],
+  "wake_ack": "tone",
+  "microphone_gain": 1.6,
+  "automatic_gain": true,
+  "endpoint_silence": 0.45,
+  "fast_endpoint": false,
+  "command_timeout": 12,
+  "command_confidence": 0.6,
+  "min_word_confidence": 0.65,
+  "name_confidence": 0.5,
+  "input_device": 14,
+  "music_url": "https://music.yandex.ru/",
+  "music_autoplay": true,
+  "music_extension_id": "godehckkmofpmnijjccajppemcflfnpm",
+  "speech_provider": "edge",
+  "brain_enabled": true,
+  "neural_voice": "ru-RU-DmitryNeural",
+  "neural_rate": "+0%",
+  "speech_fallback": false,
+  "volume_key_presses": 3,
+  "input_device_name": "Microphone Array (Senary Audio)",
+  "input_hostapi": "Windows WASAPI"
+}

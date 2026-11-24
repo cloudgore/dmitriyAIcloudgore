@@ -1,4 +1,4 @@
-@"
+
 
 # Python
 .venv/
@@ -12,7 +12,7 @@ vosk-model*/
 # Local files
 .env
 *.log
-"@ | Add-Content .gitignore
+
 # Python
 .venv/
 __pycache__/
@@ -36,3 +36,12 @@ voice-cache/
 
 # Windows shortcuts
 *.lnk
+
+# Ollama temporary files
+ollama-temp/
+
+# Local configuration
+config.local.json
+
+# Temporary files
+*.tmp

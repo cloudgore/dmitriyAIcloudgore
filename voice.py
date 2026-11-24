@@ -18,20 +18,20 @@ async def synthesize(text, voice, rate, path):
         raise ValueError('Voice is not in the allowlist')
     # A fresh socket often succeeds after the service returns NoAudioReceived.
     # Delete incomplete output before each attempt; never play partial audio.
-    for attempt in range(3):
+    for attempt in range(4):
         Path(path).unlink(missing_ok=True)
         try:
             communicator = edge_tts.Communicate(text, voice, rate=rate)
-            await asyncio.wait_for(communicator.save(str(path)), timeout=8)
+            await asyncio.wait_for(communicator.save(str(path)), timeout=25)
             if not Path(path).is_file() or not Path(path).stat().st_size:
                 raise edge_tts.exceptions.NoAudioReceived('Empty audio')
             return
         except (edge_tts.exceptions.NoAudioReceived, aiohttp.ClientError, asyncio.TimeoutError):
             Path(path).unlink(missing_ok=True)
-            if attempt == 2:
+            if attempt == 3:
                 raise
             LOG.info('Retrying Dmitry Neural synthesis: attempt %s', attempt+2)
-            await asyncio.sleep(.15)
+            await asyncio.sleep(2 * (attempt + 1))
 
 
 VOICE_UNAVAILABLE = 'Ответ можно прочитать в окне.'

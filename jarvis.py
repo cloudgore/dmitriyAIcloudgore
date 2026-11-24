@@ -33,6 +33,10 @@ def config():
 
 def speak(text, wave_path=None, cache=True):
     cfg = config()
+    if not wave_path and cfg.get("speech_provider") == "silero":
+        from silero_voice import speak_local
+        speak_local(text)
+        return
     if not wave_path and cfg.get("speech_provider") == "edge":
         try:
             clock=re.fullmatch(r'Сейчас (\d{2}):(\d{2})',text)
@@ -245,7 +249,17 @@ class Assistant:
         if self.brain is None:
             self.brain=Brain()
         if not query:
-            return self.brain.answer(question),[]
+            brain_question = question.strip()
+
+    # Короткие запросы без глагола считаем просьбой дать справку.
+            if 1 <= len(brain_question.split()) <= 3:
+                    brain_question = (
+            f"Кратко расскажи об этом: {brain_question}. "
+            "Объясни, что это такое, простыми словами. "
+            "Не говори, что ищешь информацию."
+        )
+
+            return self.brain.answer(brain_question), []
         try:
             sources=search(query)
         except Exception as error:
@@ -295,7 +309,7 @@ class Assistant:
             # The full answer remains in the ephemeral window. Keep voice responses short.
             spoken = answer if len(answer) <= 420 else answer[:400].rsplit(' ',1)[0]+'. Подробности в окне ответа.'
             speech_started=time.monotonic()
-            self.reply(spoken, cache=False)
+            self.reply(spoken, cache=True)
             LOG.info('Озвучивание ответа: %.2f сек.',time.monotonic()-speech_started)
             LOG.info('Ответ завершён: %s', 'DuckDuckGo и Qwen3' if query else 'Qwen3')
         except Exception as error:
