@@ -1,0 +1,38 @@
+@"
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Voice models
+models/
+vosk-model*/
+
+# Local files
+.env
+*.log
+"@ | Add-Content .gitignore
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# AI models
+models/
+ollama-models/
+ollama-profile/
+vosk-model*/
+
+# Logs
+*.log
+
+# Ollama runtime
+ollama-runtime/
+
+# Generated voice files
+voice-cache/
+
+# Windows shortcuts
+*.lnk

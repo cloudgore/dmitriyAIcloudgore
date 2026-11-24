@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Джарвис — Яндекс Музыка",
+  "version": "1.1.0",
+  "host_permissions": ["http://127.0.0.1:17843/*"],
+  "background": {"service_worker": "background.js"},
+  "description": "Нажимает Играть на Яндекс Музыке только при открытии специальной ссылки локальным Джарвисом.",
+  "content_scripts": [{
+    "matches": ["https://music.yandex.ru/*"],
+    "js": ["play.js", "controls.js"],
+    "run_at": "document_idle"
+  }]
+}
